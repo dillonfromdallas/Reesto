@@ -44,5 +44,5 @@ export default function(restaurants: RestaurantDto[]): Restaurant[] {
     });
   });
 
-  return processed;
+  return processed.sort((a, b) => a.name.localeCompare(b.name));
 }
