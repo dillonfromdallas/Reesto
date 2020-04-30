@@ -6,7 +6,9 @@ import { Restaurant } from "../Models/Restaurant";
 
 const Div = styled.div({
   display: "flex",
-  flexDirection: "row"
+  flexDirection: "column",
+  maxWidth: "90%",
+  flexWrap: "wrap"
 });
 
 export default function() {
@@ -40,35 +42,90 @@ export default function() {
   useEffect(() => {
     dispatch({ type: "SET_SEARCH_FILTER", payload: searchFilter });
   }, [searchFilter]);
+  useEffect(() => {
+    dispatch({ type: "SET_STATE_FILTER", payload: stateFilter });
+  }, [stateFilter]);
+  useEffect(() => {
+    dispatch({ type: "SET_GENRE_FILTER", payload: genreFilter });
+  }, [genreFilter]);
 
+  const UL = styled.ul({
+    display: "flex",
+    flexDirection: "row",
+    listStyleType: "none",
+    maxWidth: "60%",
+    flexWrap: "wrap",
+    maxHeight: "1%"
+  });
+
+  const renderStateOptions = (states: string[]) => {
+    return (
+      <UL>
+        {states.map(each => {
+          return (
+            <li>
+              <button onClick={e => setStateFilter(each)}>{each}</button>
+            </li>
+          );
+        })}
+      </UL>
+    );
+  };
+  const renderGenreOptions = (genres: string[]) => {
+    return (
+      <UL>
+        {genres.map(each => {
+          return (
+            <li>
+              <button onClick={e => setGenreFilter(each)}>{each}</button>
+            </li>
+          );
+        })}
+      </UL>
+    );
+  };
+
+  const toggleDisplayStates = () => {
+    setDisplayStates(!displayStates);
+    setDisplayGenre(false);
+  };
+
+  const toggleDisplayGenre = () => {
+    setDisplayGenre(!displayGenre);
+    setDisplayStates(false);
+  };
+
+  const clearFilters = () => {
+    setGenreFilter("");
+    setStateFilter("");
+    setSearchFilter("");
+    setDisplayGenre(false);
+    setDisplayStates(false);
+  };
+
+  var Row = styled.div({
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+  });
   return (
     <Div>
-      <input
-        placeholder="Busca"
-        type="text"
-        onChange={e => setSearchFilter(e.target.value)}
-      />
-      <button onClick={() => setDisplayStates(!displayStates)}>State</button>
-      <button onClick={() => setDisplayGenre(!displayGenre)}>Genre</button>
+      <Row>
+        <input
+          placeholder="Busca"
+          type="text"
+          onChange={e => setSearchFilter(e.target.value)}
+        />
+        <button onClick={() => toggleDisplayStates()}>State</button>
+        <button onClick={() => toggleDisplayGenre()}>Genre</button>
+        <button onClick={() => clearFilters()}>X</button>
+      </Row>
+      <Row>
+        {displayStates && renderStateOptions(states)}
+        {displayGenre && renderGenreOptions(genres)}
+      </Row>
     </Div>
   );
 }
-
-// const setState = (e: any) => {
-//     e.preventDefault();
-//     console.log(e.target.value);
-//     const filtered = list.filter((each: Restaurant) => {
-//       if (
-//         each.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-//         each.city.toLowerCase().includes(e.target.value.toLowerCase()) ||
-//         each.genre
-//           .join(",")
-//           .toLowerCase()
-//           .includes(e.target.value.toLowerCase()) ||
-//         each.state.toLowerCase().includes(e.target.value.toLowerCase())
-//       )
-//         return each;
-//     });
-//     dispatch(setCurrent(filtered));
-//     setSearchFilter(filtered);
-//   };

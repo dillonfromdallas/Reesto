@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 const Div = styled.div({
   display: "flex",
   flex: 1,
-  flexDirection: "row",
+  flexDirection: "column",
   textAlign: "center",
   alignItems: "center",
   justifyContent: "space-evenly",
