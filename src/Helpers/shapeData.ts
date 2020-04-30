@@ -44,5 +44,7 @@ export default function(restaurants: RestaurantDto[]): Restaurant[] {
     });
   });
 
-  return processed.sort((a, b) => a.name.localeCompare(b.name));
+  return processed.sort((a, b) =>
+    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+  );
 }
