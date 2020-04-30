@@ -1,4 +1,4 @@
-interface RestaurantDto {
+export interface RestaurantDto {
   address1: string;
   attire: string;
   city: string;
