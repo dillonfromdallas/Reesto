@@ -1,24 +1,22 @@
 import { Restaurant } from "../../Models/Restaurant";
-import getRestaurants from "./getRestaurants";
 
-export default function(state = initialState, action: ActionBase) {
+export default function(
+  state = initialState,
+  action: { type: string; payload: any }
+) {
   switch (action.type) {
     case "GET":
-      return getRestaurants();
+      console.log(action.payload);
+      return { ...state, list: action.payload };
     default:
       return state;
   }
 }
 
-export interface ActionBase {
-  type: string;
-  payload: any;
-}
-
 export interface InitialState {
-  restaurants: Restaurant[];
+  list: Restaurant[];
 }
 
 var initialState: InitialState = {
-  restaurants: []
+  list: []
 };
