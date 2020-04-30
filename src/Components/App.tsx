@@ -4,6 +4,7 @@ import Container from "./AppContainer";
 import Header from "./Header";
 import DataViewer from "./DataViewer";
 import { getData, setCurrent } from "../Redux/actions";
+import { Restaurant } from "../Models/Restaurant";
 
 function App() {
   const dispatch = useDispatch();
@@ -12,15 +13,28 @@ function App() {
     dispatch(getData());
   }, []);
 
-  const { list, current } = useSelector(
-    (state: RootStateOrAny) => state.restaurants
-  );
+  const {
+    restaurants: { list },
+    filters: { searchFilter, stateFilter, genreFilter }
+  } = useSelector((state: RootStateOrAny) => state);
+
+  const filtered: Restaurant[] = list
+    .filter((e: Restaurant) =>
+      searchFilter
+        ? e.name.toLowerCase().includes(searchFilter.toLowerCase())
+        : e
+    )
+
+    .filter((e: Restaurant) => (stateFilter ? e.state == stateFilter : e))
+    .filter((e: Restaurant) =>
+      genreFilter ? e.genre.includes(genreFilter) : e
+    );
 
   return (
     <Container>
       <Header>Reesta</Header>
-      {current && current.length ? (
-        <DataViewer list={current} />
+      {filtered && filtered.length ? (
+        <DataViewer list={filtered} />
       ) : (
         <DataViewer list={list} />
       )}
