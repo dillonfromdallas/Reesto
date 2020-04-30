@@ -16,3 +16,21 @@ export const setCurrent = (list: Restaurant[] = []) => {
     dispatch({ type: "SET_CURRENT", payload: list });
   };
 };
+
+export const setSearchFilter = (filter: string) => {
+  return (dispatch: any) => {
+    dispatch({ type: "SET_SEARCH_FILTER", payload: filter });
+  };
+};
+
+export const setStateFilter = (filter: string) => {
+  return (dispatch: any) => {
+    dispatch({ type: "SET_STATE_FILTER", payload: filter });
+  };
+};
+
+export const setGenreFilter = (filter: string) => {
+  return (dispatch: any) => {
+    dispatch({ type: "SET_GENRE_FILTER", payload: filter });
+  };
+};
