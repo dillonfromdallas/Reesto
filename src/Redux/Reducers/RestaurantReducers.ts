@@ -16,10 +16,9 @@ export default function(
   }
 }
 
-export interface InitialState {
-  list: Restaurant[];
-}
-
-var initialState: InitialState = {
+var initialState = {
+  searchFilter: "",
+  stateFilter: "",
+  genreFilter: "",
   list: []
 };
