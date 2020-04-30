@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { restaurantActions } from "./Redux/actions";
 import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: restaurantActions.get });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
