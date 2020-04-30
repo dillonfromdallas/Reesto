@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import SearchBar from "./SearchBar";
 
 const Div = styled.div({
+  display: "flex",
   flex: 1,
   flexDirection: "row",
   textAlign: "center",
+  alignItems: "center",
+  justifyContent: "space-evenly",
   width: "100%"
 });
 
@@ -22,6 +26,7 @@ export default function(props: Props) {
   return (
     <Div>
       <Header>{props.children}</Header>
+      <SearchBar />
     </Div>
   );
 }
