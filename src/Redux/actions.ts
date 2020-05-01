@@ -34,3 +34,9 @@ export const setGenreFilter = (filter: string) => {
     dispatch({ type: "SET_GENRE_FILTER", payload: filter });
   };
 };
+
+export const setTimeFilter = (filter: Date) => {
+  return (dispatch: any) => {
+    dispatch({ type: "SET_TIME_FILTER", payload: filter });
+  };
+};

@@ -1,3 +1,5 @@
+import { Restaurant } from "../../Models/Restaurant";
+
 export default function(
   state = initialState,
   action: { type: string; payload: any }
@@ -9,14 +11,26 @@ export default function(
       return { ...state, stateFilter: action.payload };
     case "SET_GENRE_FILTER":
       return { ...state, genreFilter: action.payload };
+    case "SET_TIME_FILTER":
+      return { ...state, timeFilter: action.payload };
+    case "RESET_TIME_FILTER":
+      return { ...state, timeFilter: 0 };
     default:
       return state;
   }
 }
 
-var initialState = {
+interface InitialState {
+  searchFilter: string;
+  stateFilter: string;
+  genreFilter: string;
+  timeFilter: 0 | Date;
+  list: Restaurant[];
+}
+var initialState: InitialState = {
   searchFilter: "",
   stateFilter: "",
   genreFilter: "",
-  list: []
+  timeFilter: 0,
+  list: [] as Restaurant[]
 };
