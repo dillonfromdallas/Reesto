@@ -10,7 +10,7 @@ export default styled.div({
   height: "20%",
   boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
   padding: "1%",
-  backgroundColor: "beige",
+  backgroundColor: "#efeee8",
   ":hover": {
     boxShadow: "0 8px 16px 0 rgba(0,0,0,0.4)"
   }
