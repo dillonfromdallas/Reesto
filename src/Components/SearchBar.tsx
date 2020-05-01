@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, RootStateOrAny } from "react-redux";
 import styled from "styled-components";
-import { setCurrent } from "../Redux/actions";
+import Button from "../Components/Button";
 import { Restaurant } from "../Models/Restaurant";
 
 const Div = styled.div({
@@ -15,11 +15,14 @@ export default function() {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootStateOrAny) => state.restaurants);
 
+  const [searchFilter, setSearchFilter] = useState("");
+  const [timeFilter, setTimeFilter] = useState(new Date(1, 1, 1970));
+
   const [stateFilter, setStateFilter] = useState("");
   const [displayStates, setDisplayStates] = useState(false);
+
   const [genreFilter, setGenreFilter] = useState("");
   const [displayGenre, setDisplayGenre] = useState(false);
-  const [searchFilter, setSearchFilter] = useState("");
 
   // Create string[] of unique State values
   let states: string[] = Array.from(
@@ -48,25 +51,25 @@ export default function() {
   useEffect(() => {
     dispatch({ type: "SET_GENRE_FILTER", payload: genreFilter });
   }, [genreFilter]);
+  useEffect(() => {
+    dispatch({ type: "SET_TIME_FILTER", payload: timeFilter });
+  }, [timeFilter]);
 
   const UL = styled.ul({
     display: "flex",
     flexDirection: "row",
     listStyleType: "none",
-    maxWidth: "60%",
-    flexWrap: "wrap",
-    maxHeight: "1%"
+    justifyContent: "space-between",
+    maxWidth: "70%",
+    flexWrap: "wrap"
+    // maxHeight: "1%"
   });
 
   const renderStateOptions = (states: string[]) => {
     return (
       <UL>
         {states.map(each => {
-          return (
-            <li>
-              <button onClick={e => setStateFilter(each)}>{each}</button>
-            </li>
-          );
+          return <Button onClick={e => setStateFilter(each)}>{each}</Button>;
         })}
       </UL>
     );
@@ -75,11 +78,7 @@ export default function() {
     return (
       <UL>
         {genres.map(each => {
-          return (
-            <li>
-              <button onClick={e => setGenreFilter(each)}>{each}</button>
-            </li>
-          );
+          return <Button onClick={e => setGenreFilter(each)}>{each}</Button>;
         })}
       </UL>
     );
@@ -95,10 +94,15 @@ export default function() {
     setDisplayStates(false);
   };
 
+  const toggleOpenNow = () => {
+    setTimeFilter(new Date());
+  };
+
   const clearFilters = () => {
     setGenreFilter("");
     setStateFilter("");
     setSearchFilter("");
+    setTimeFilter(new Date(1900, 1, 1));
     setDisplayGenre(false);
     setDisplayStates(false);
   };
@@ -118,9 +122,10 @@ export default function() {
           type="text"
           onChange={e => setSearchFilter(e.target.value)}
         />
-        <button onClick={() => toggleDisplayStates()}>State</button>
-        <button onClick={() => toggleDisplayGenre()}>Genre</button>
-        <button onClick={() => clearFilters()}>X</button>
+        <Button onClick={() => toggleDisplayStates()}>State</Button>
+        <Button onClick={() => toggleDisplayGenre()}>Genre</Button>
+        <Button onClick={() => toggleOpenNow()}>Open Now</Button>
+        <Button onClick={() => clearFilters()}>X</Button>
       </Row>
       <Row>
         {displayStates && renderStateOptions(states)}
