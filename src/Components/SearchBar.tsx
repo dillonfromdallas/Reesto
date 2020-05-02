@@ -7,8 +7,9 @@ import { Restaurant } from "../Models/Restaurant";
 const Div = styled.div({
   display: "flex",
   flexDirection: "column",
-  maxWidth: "90%",
-  flexWrap: "wrap"
+  minWidth: "90%",
+  flexWrap: "wrap",
+  justifyContent: "space-evenly"
 });
 
 export default function() {
@@ -23,6 +24,11 @@ export default function() {
 
   const [genreFilter, setGenreFilter] = useState("");
   const [displayGenre, setDisplayGenre] = useState(false);
+
+  const processSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setSearchFilter(e.target.value);
+  };
 
   // Create string[] of unique State values
   let states: string[] = Array.from(
@@ -69,7 +75,11 @@ export default function() {
     return (
       <UL>
         {states.map(each => {
-          return <Button onClick={e => setStateFilter(each)}>{each}</Button>;
+          return (
+            <Button onClick={e => setStateFilter(each)}>
+              <p>{each}</p>
+            </Button>
+          );
         })}
       </UL>
     );
@@ -78,7 +88,11 @@ export default function() {
     return (
       <UL>
         {genres.map(each => {
-          return <Button onClick={e => setGenreFilter(each)}>{each}</Button>;
+          return (
+            <Button onClick={e => setGenreFilter(each)}>
+              <p>{each}</p>
+            </Button>
+          );
         })}
       </UL>
     );
@@ -110,9 +124,10 @@ export default function() {
   var Row = styled.div({
     display: "flex",
     flexDirection: "row",
-    width: "100%",
+    minWidth: "100%",
+    height: "20%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "space-evenly"
   });
   return (
     <Div>
@@ -120,12 +135,20 @@ export default function() {
         <input
           placeholder="Busca"
           type="text"
-          onChange={e => setSearchFilter(e.target.value)}
+          onChange={e => processSearchQuery(e)}
         />
-        <Button onClick={() => toggleDisplayStates()}>State</Button>
-        <Button onClick={() => toggleDisplayGenre()}>Genre</Button>
-        <Button onClick={() => toggleOpenNow()}>Open Now</Button>
-        <Button onClick={() => clearFilters()}>X</Button>
+        <Button onClick={() => toggleDisplayStates()}>
+          <p>State</p>
+        </Button>
+        <Button onClick={() => toggleDisplayGenre()}>
+          <p>Genre</p>
+        </Button>
+        <Button onClick={() => toggleOpenNow()}>
+          <p>Open Now</p>
+        </Button>
+        <Button onClick={() => clearFilters()}>
+          <p>Clear</p>
+        </Button>
       </Row>
       <Row>
         {displayStates && renderStateOptions(states)}
