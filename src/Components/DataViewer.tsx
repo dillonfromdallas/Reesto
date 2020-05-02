@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, RootStateOrAny } from "react-redux";
 import styled from "styled-components";
 import Card from "./Card";
 import { Restaurant } from "../Models/Restaurant";
@@ -26,10 +25,12 @@ export default function(props: IProps) {
         props.list.map(each => {
           return (
             <Card>
-              <h2>{each.name}</h2>
-              <p>{`${each.city}, ${each.state}`}</p>
-              <p>{each.telephone}</p>
-              <p>{each.genre.join(", ")}</p>
+              <a href={each.website}>
+                <h2>{each.name}</h2>
+                <p>{`${each.city}, ${each.state}`}</p>
+                <p>{each.telephone}</p>
+                <p>{each.genre.join(", ")}</p>
+              </a>
             </Card>
           );
         })}

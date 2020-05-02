@@ -19,7 +19,10 @@ html {
 /**
  * Remove the margin in all browsers.
  */
-
+a {
+  color: black;
+  text-decoration-line: none;
+}
 body {
   margin: 0;
   font-family: sans-serif;
